@@ -5,8 +5,9 @@ import { ArrowRight } from 'lucide-react';
 import { generateRoundRobinSchedule } from '../../utils/bracket';
 import { type Team } from '../../types';
 import { useNavigate } from 'react-router-dom';
+import { generateContrastingColors } from '../../utils/palette';
 
-const SEGMENT_COLORS = ['#22c55e', '#3b82f6', '#f97316', '#ec4899', '#eab308', '#06b6d4'];
+
 
 export const WheelScreen: React.FC = () => {
     const {
@@ -33,13 +34,15 @@ export const WheelScreen: React.FC = () => {
     const wheelSegments = remainingTeams;
     const segmentAngle = wheelSegments.length ? 360 / wheelSegments.length : 0;
 
+    const palette = useMemo(() => generateContrastingColors(wheelSegments.length), [wheelSegments.length]);
+
     const wheelGradient =
         wheelSegments.length > 0
             ? `conic-gradient(${wheelSegments
                   .map((team, index) => {
                       const start = index * segmentAngle;
                       const end = (index + 1) * segmentAngle;
-                      const base = team.color ?? SEGMENT_COLORS[index % SEGMENT_COLORS.length];
+                      const base = palette[index];
                       return `${base} ${start}deg ${end}deg`;
                   })
                   .join(', ')})`
@@ -124,7 +127,7 @@ export const WheelScreen: React.FC = () => {
                     </p>
                     <div className="flex flex-wrap justify-center gap-2">
                         {wheelSegments.map((team, index) => {
-                            const color = team.color ?? SEGMENT_COLORS[index % SEGMENT_COLORS.length];
+                            const color = palette[index];
                             return (
                             <span
                                 key={team.id}

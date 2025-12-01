@@ -3,8 +3,7 @@ import { useTournamentStore } from '../../store/tournamentStore';
 import { Plus, Trash2, Users, Shield, Play } from 'lucide-react';
 import { type Team } from '../../types';
 import { useNavigate } from 'react-router-dom';
-
-const TEAM_COLORS = ['#22c55e', '#3b82f6', '#f97316', '#ec4899', '#eab308', '#06b6d4'];
+import { colorFromIndex } from '../../utils/palette';
 
 export const SetupScreen: React.FC = () => {
     const {
@@ -51,7 +50,7 @@ export const SetupScreen: React.FC = () => {
             id: crypto.randomUUID(),
             name: normalized,
             league: 'Özel Lig',
-            color: TEAM_COLORS[teams.length % TEAM_COLORS.length],
+            color: colorFromIndex(teams.length),
         };
 
         setTeams([...teams, nextTeam]);
