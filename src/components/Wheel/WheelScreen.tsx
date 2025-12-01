@@ -6,7 +6,7 @@ import { generateRoundRobinSchedule } from '../../utils/bracket';
 import { type Team } from '../../types';
 import { useNavigate } from 'react-router-dom';
 
-const SEGMENT_COLORS = ['#10b981', '#3b82f6', '#f97316', '#ec4899', '#facc15', '#22d3ee'];
+const SEGMENT_COLORS = ['#22c55e', '#3b82f6', '#f97316', '#ec4899', '#eab308', '#06b6d4'];
 
 export const WheelScreen: React.FC = () => {
     const {
@@ -36,11 +36,11 @@ export const WheelScreen: React.FC = () => {
     const wheelGradient =
         wheelSegments.length > 0
             ? `conic-gradient(${wheelSegments
-                  .map((_, index) => {
+                  .map((team, index) => {
                       const start = index * segmentAngle;
                       const end = (index + 1) * segmentAngle;
-                      const color = SEGMENT_COLORS[index % SEGMENT_COLORS.length];
-                      return `${color} ${start}deg ${end}deg`;
+                      const base = team.color ?? SEGMENT_COLORS[index % SEGMENT_COLORS.length];
+                      return `${base} ${start}deg ${end}deg`;
                   })
                   .join(', ')})`
             : 'radial-gradient(circle at center, rgba(16,185,129,0.4), rgba(15,23,42,0.9))';
@@ -110,28 +110,11 @@ export const WheelScreen: React.FC = () => {
 
                 <motion.div
                     animate={controls}
-                    className="w-[22rem] h-[22rem] md:w-[28rem] md:h-[28rem] rounded-full border-8 border-slate-900 bg-slate-900 relative overflow-hidden shadow-[0_0_60px_rgba(16,185,129,0.35)]"
+                    className="w-[22rem] h-[22rem] md:w-[26rem] md:h-[26rem] rounded-full border-[10px] border-slate-900 bg-slate-900 relative overflow-hidden shadow-[0_0_70px_rgba(16,185,129,0.45)]"
                     style={{ backgroundImage: wheelGradient }}
                 >
-                    {wheelSegments.map((team, index) => (
-                        <div
-                            key={team.id}
-                            className="absolute left-1/2 top-1/2 text-xs font-semibold text-white"
-                            style={{
-                                transform: `rotate(${index * segmentAngle}deg) translate(-50%, -8.5rem)`,
-                            }}
-                        >
-                            <span
-                                className="block text-center uppercase tracking-wide"
-                                style={{ transform: `rotate(${segmentAngle / 2}deg)` }}
-                            >
-                                {team.name}
-                            </span>
-                        </div>
-                    ))}
-
-                    <div className="absolute inset-10 rounded-full bg-slate-900/80 backdrop-blur-sm flex items-center justify-center border border-slate-800">
-                        <span className="text-slate-400 text-sm uppercase tracking-[0.3em]">FC26</span>
+                    <div className="absolute inset-[6.2rem] md:inset-[6.6rem] rounded-full bg-slate-900/98 backdrop-blur-md flex items-center justify-center border border-slate-800 shadow-[0_0_40px_rgba(15,23,42,0.9)]">
+                        <span className="text-slate-400 text-xs uppercase tracking-[0.55em]">FC 26</span>
                     </div>
                 </motion.div>
 
@@ -140,14 +123,18 @@ export const WheelScreen: React.FC = () => {
                         Kalan Takımlar: <span className="font-semibold text-white">{wheelSegments.length}</span>
                     </p>
                     <div className="flex flex-wrap justify-center gap-2">
-                        {wheelSegments.map((team) => (
+                        {wheelSegments.map((team, index) => {
+                            const color = team.color ?? SEGMENT_COLORS[index % SEGMENT_COLORS.length];
+                            return (
                             <span
                                 key={team.id}
-                                className="px-3 py-1 rounded-full bg-slate-800 text-xs text-slate-200 border border-slate-700"
+                                className="px-3 py-1 rounded-full text-xs font-semibold text-slate-900 shadow-[0_0_18px_rgba(15,23,42,0.9)]"
+                                style={{ backgroundColor: color }}
                             >
                                 {team.name}
                             </span>
-                        ))}
+                        );
+                        })}
                         {wheelSegments.length === 0 && (
                             <span className="text-slate-500 text-sm">Tüm takımlar dağıtıldı.</span>
                         )}

@@ -4,6 +4,7 @@ export interface Team {
     league: string;
     badge?: string;
     rating?: number; // Optional rating for sorting or display
+    color?: string;
 }
 
 export interface Player {
