@@ -47,6 +47,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             </main>
             <footer className="p-4 text-center text-slate-500 text-sm">
                 <p>FIFA 2026 Tournament Manager</p>
+                <p>© Design by Tolgahan Ayaz</p>
             </footer>
         </div>
     );
