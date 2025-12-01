@@ -129,7 +129,7 @@ export const SetupScreen: React.FC = () => {
                                 </div>
                                 <button
                                     onClick={() => removePlayer(player.id)}
-                                    className="text-slate-400 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                                    className="text-slate-400 hover:text-red-400 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
                                 >
                                     <Trash2 size={18} />
                                 </button>
@@ -181,7 +181,7 @@ export const SetupScreen: React.FC = () => {
                                 <button
                                     type="button"
                                     onClick={() => handleRemoveTeam(team.id)}
-                                    className="text-slate-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                                    className="text-slate-500 hover:text-red-400 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
                                 >
                                     <Trash2 size={14} />
                                 </button>
