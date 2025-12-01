@@ -38,14 +38,16 @@ export const WheelScreen: React.FC = () => {
 
     const wheelGradient =
         wheelSegments.length > 0
-            ? `conic-gradient(${wheelSegments
-                  .map((team, index) => {
+            ? (() => {
+                  const pieces: string[] = [];
+                  for (let index = 0; index < wheelSegments.length; index++) {
                       const start = index * segmentAngle;
                       const end = (index + 1) * segmentAngle;
                       const base = palette[index];
-                      return `${base} ${start}deg ${end}deg`;
-                  })
-                  .join(', ')})`
+                      pieces.push(`${base} ${start}deg ${end}deg`);
+                  }
+                  return `conic-gradient(${pieces.join(', ')})`;
+              })()
             : 'radial-gradient(circle at center, rgba(16,185,129,0.4), rgba(15,23,42,0.9))';
 
     const handleSpin = async () => {
